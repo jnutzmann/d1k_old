@@ -175,3 +175,10 @@ int _execve(const uint8_t *name, uint8_t * const *argv, uint8_t * const *env)
   errno = ENOMEM;
   return -1;
 }
+
+void assert_failed(u8* file, u32 line)
+{
+	printf( "\r\nassert_failed(). file: %s, line: %ld\r\n", file, line );
+	while (1)
+	{}
+}
