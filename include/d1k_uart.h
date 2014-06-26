@@ -1,5 +1,5 @@
 /********************************************************************
-d1k_stdio_uart.h
+d1k_uart.h
 
 Copyright (c) 2014, Jonathan Nutzmann
 
@@ -14,27 +14,11 @@ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU General Public License for more details.
 ********************************************************************/
 
-#ifndef STDIO_UART_H
-#define STDIO_UART_H
-
-/****************************************************************************
- * Includes
- ***************************************************************************/
-
 #include "d1k.h"
-#include "stdio.h"
+#include "stm32f4xx_usart.h"
 
+void d1k_uart_init( uint32 baudrate );
 
-/****************************************************************************
- * Public Function Prototypes
- ***************************************************************************/
-
-void d1k_STDIO_UART_Init ( uint32 baudRate );
-void d1k_STDIO_UART_DeInit ( void );
-void d1k_STDIO_UART_Send (const uint8_t *buf, size_t len);
-
-#endif /* STDIO_CAN_H_ */
-
-
-
-
+void d1k_uart_puts( char* message, size_t len );
+void d1k_uart_put( char byte );
+char d1k_uart_receive( void );

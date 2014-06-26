@@ -35,7 +35,6 @@ GNU General Public License for more details.
  ***************************************************************************/
 
 void d1k_STDIO_CAN_Init( CAN_TypeDef * canModule, uint32 txAddr, uint32 rxAddr );
-void d1k_STDIO_CAN_DeInit ( void );
-void d1k_STDIO_CAN_Send   (const uint8_t *buf, size_t len);
+void d1k_STDIO_CAN_Send   (const char *buf, size_t len);
 
 #endif /* STDIO_CAN_H_ */

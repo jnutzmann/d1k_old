@@ -35,6 +35,8 @@
 #include <sys/times.h>
 #include "stm32f4xx.h"
 
+#include "d1k_uart.h"
+
 /* Variables */
 #undef errno
 extern int errno;
@@ -67,6 +69,8 @@ void _exit (int32_t status)
 
 int _write(int32_t file, uint8_t *ptr, int32_t len)
 {
+	d1k_uart_puts((char*)ptr, len);
+
   /* Implement your write code here, this is used by puts and printf for example */
   return len;
 }
