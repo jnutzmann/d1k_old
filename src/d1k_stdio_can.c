@@ -82,21 +82,28 @@ void d1k_STDIO_CAN_Init( CAN_TypeDef * canModule, uint32 txAddr, uint32 rxAddr )
 	canStdioEnabled = ENABLE;
 
 	canStdioReadEntry.idAfterMask = rxAddr;
-	d1k_CAN_RegisterHandler(canModule, &canStdioReadEntry);
+	d1k_CAN_RegisterHandler(canModule,&canStdioReadEntry);
 
 	pendingPacket.StdId = txAddr;
 	xTaskCreate(d1k_STDIO_CAN_Task, "CANIO", 1024, NULL, 2, &canStdioTask);
 }
 
 /**
+ * Disables the CAN STDIO module.
+ */
+void d1k_STDIO_CAN_DeInit( void )
+{
+	canStdioEnabled = DISABLE;
+	// TODO: De-register handler?
+}
+
+// TODO: this is definitely not thread safe.  Is printf?
+/**
  * Sends a STDIO buffer out the CAN module.
- *
- * NOTE: This is NOT tread safe.
- *
  * @param buf - Buffer to send.
  * @param len - Number of characters in the buffer.
  */
-void d1k_STDIO_CAN_Send(const char *buf, size_t len)
+void d1k_STDIO_CAN_Send(const uint8_t *buf, size_t len)
 {
 	if (canStdioEnabled == DISABLE)
 	{
@@ -113,7 +120,8 @@ void d1k_STDIO_CAN_Send(const char *buf, size_t len)
 		if (pendingPacket.DLC == 8)
 		{
 			// Use the ISR method to be safe.
-			d1k_CAN_SendPacket_ISR( canStdioModule, &pendingPacket );
+			// TODO: does this have any side-effects?
+			d1k_CAN_SendPacket_ISR(canStdioModule, &pendingPacket);
 
 			// Reset the length.
 			pendingPacket.DLC = 0;
@@ -158,7 +166,7 @@ static void d1k_STDIO_CAN_Task ( void * pvParameters )
 
 static void d1k_STDIO_CAN_ReadPacketHandler( CanRxMsg * packet )
 {
-	d1k_stdio_queueReceived( (char*) &(packet->Data[0]), packet->DLC);
+	d1k_stdio_queueReceived(&(packet->Data[0]),packet->DLC);
 }
 
 

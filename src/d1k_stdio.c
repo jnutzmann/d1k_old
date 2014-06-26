@@ -21,17 +21,15 @@ GNU General Public License for more details.
 #include "d1k_stdio_can.h"
 #include "d1k_stdio.h"
 #include <stdlib.h>
-#include <string.h>
 #include "d1k_led.h"
 #include "FreeRTOS.h"
 #include "queue.h"
-#include "d1k_uart.h"
 
 /****************************************************************************
  * Defines
  ***************************************************************************/
 
-#define RECEIVE_QUEUE_LENGTH (512)
+#define RECEIVE_QUEUE_LENGTH		(512)
 
 /****************************************************************************
  * Global Variables
@@ -48,7 +46,7 @@ static xQueueHandle stdioReceiveQueue = NULL;
  */
 void d1k_stdio_Init( void )
 {
-	stdioReceiveQueue = xQueueCreate( RECEIVE_QUEUE_LENGTH, sizeof(uint8_t) );
+	stdioReceiveQueue = xQueueCreate(RECEIVE_QUEUE_LENGTH,sizeof(uint8_t));
 }
 
 /**
@@ -56,9 +54,9 @@ void d1k_stdio_Init( void )
  * @param buf - address to put the received character.
  * @return pdTRUE if character returned successfully.  Should never be pdFALSE.
  */
-portBASE_TYPE d1k_stdio_WaitForReceived( char* buf )
+portBASE_TYPE d1k_stdio_WaitForReceived(uint8* buf)
 {
-	return xQueueReceive( stdioReceiveQueue, buf, portMAX_DELAY );
+	return xQueueReceive(stdioReceiveQueue,buf,portMAX_DELAY);
 }
 
 /**
@@ -66,70 +64,71 @@ portBASE_TYPE d1k_stdio_WaitForReceived( char* buf )
  * @param buf - Buffer of characters to queue.
  * @param len - Number of characters in buffer.
  */
-void d1k_stdio_queueReceived( char* buf, size_t len )
+void d1k_stdio_queueReceived( uint8_t* buf, size_t len )
 {
-	if ( stdioReceiveQueue != NULL )
+	if (stdioReceiveQueue != NULL)
 	{
 		while (len > 0)
 		{
-			xQueueSendFromISR( stdioReceiveQueue, buf, NULL);
+			xQueueSendFromISR(stdioReceiveQueue,buf,NULL);
 			buf++;
 			len--;
 		}
 	}
 }
 
+// TODO: Restructure to make more efficient?  Should be able to directly
+//       send 1 character without all the fxn calls.
+
+
 /**
- * Send a string out STDIO.
- *
+ * Send a string out STDIO.  MIGHT NOT WORK!!!!
  * @param str - Null terminated string to send.
  */
-void d1k_stdio_PutStr( const char* str )
+void d1k_stdio_PutStr( const uint8_t* str )
 {
-	__write( 1, str, strlen(str) );
+	size_t len = 0;
+	const uint8_t* c = str;
+
+	// TODO: use strlen
+	while (c++ != 0) len++;
+
+	__write(1,str,len);
 }
 
 /**
  * Send a character out STDIO.
  * @param c - character to send.
  */
-void d1k_stdio_PutCh( const char c )
+void d1k_stdio_PutCh( const uint8_t c )
 {
-	__write( 1, &c, 1 );
+	__write(1,&c,1);
 }
 
 /**
  * Writes a buffer out the STDIO channel.  Used by printf.
- * For direct use, use d1k_stdio_PutStr(...) or d1k_stdio_PutCh(...)...
- *
+ * For direct use, use d1k_stdio_PutStr(...) or d1k_stdio_PutCh(...).
  * @param handle - STDIO handle.
  * @param buf - Character buffer.
  * @param len - Number of characters in the buffer.
  * @return Number of characters sent.
  */
-//size_t __write(int handle, const char *buf, size_t len)
-//{
-//
-//	if ( (handle == -1) || (buf == NULL) )
-//	{
-//		return 0;
-//	}
-//
-//	if ( handle != 1 && handle != 2 )
-//	{
-//		return -1;
-//	}
-//
-//	d1k_uart_puts(buf, len);
-//	//d1k_STDIO_CAN_Send( buf, len );
-//
-//	return len;
-//}
-
-void assert_failed(u8* file, u32 line)
+size_t __write(int handle, const uint8_t *buf, size_t len)
 {
-  printf( "\r\nassert_failed(). file: %s, line: %ld\r\n", file, line );
-  while (1) {}
+
+	if ((handle == -1) || (buf == NULL))
+	{
+		return 0;
+	}
+
+	if (handle != 1 && handle != 2)
+	{
+		return -1;
+	}
+
+	d1k_STDIO_CAN_Send(buf,len);
+
+	return len;
 }
 
 

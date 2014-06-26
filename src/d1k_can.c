@@ -146,7 +146,6 @@ void d1k_CAN_SendPacket ( CAN_TypeDef * canModule, CanTxMsg * packet )
 		// TODO: What should we set this timeout to?
 		xQueueSend( (canModule==CAN1) ? can1TXQueue : can2TXQueue, packet, 0 );
 
-
 		CAN_ITConfig(canModule,CAN_IT_TME,ENABLE);
 	}
 }
