@@ -23,12 +23,6 @@ GNU General Public License for more details.
 
 #include "stm32f4xx.h"
 
-//#include "d1k_can.h"
-//#include "d1k_led.h"
-//#include "d1k_portal.h"
-//#include "d1k_stdio.h"
-//#include "d1k_stdio_can.h"
-
 /****************************************************************************
  * Typedefs
  ***************************************************************************/

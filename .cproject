@@ -6,8 +6,11 @@
 				<externalSettings>
 					<externalSetting>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/libeasy"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/d1k"/>
 						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/libeasy/Debug"/>
+						<entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/d1k/Debug"/>
 						<entry flags="RESOLVED" kind="libraryFile" name="libeasy" srcPrefixMapping="" srcRootPath=""/>
+						<entry flags="RESOLVED" kind="libraryFile" name="d1k" srcPrefixMapping="" srcRootPath=""/>
 					</externalSetting>
 				</externalSettings>
 				<extensions>
@@ -24,14 +27,14 @@
 							<builder buildPath="${workspace_loc:/libeasy}/Debug" id="com.atollic.truestudio.mbs.builder1.2083548412" keepEnvironmentInBuildfile="false" managedBuildOn="true" name="CDT Internal Builder" parallelBuildOn="true" parallelizationNumber="optimal" superClass="com.atollic.truestudio.mbs.builder1"/>
 							<tool id="com.atollic.truestudio.lib.debug.toolchain.as.1054209229" name="Assembler" superClass="com.atollic.truestudio.lib.debug.toolchain.as">
 								<option id="com.atollic.truestudio.common_options.target.fpucore.652311033" name="FPU" superClass="com.atollic.truestudio.common_options.target.fpucore" value="FPv4-SP-D16" valueType="enumerated"/>
-								<option id="com.atollic.truestudio.common_options.target.mcpu.78929774" name="Microcontroller" superClass="com.atollic.truestudio.common_options.target.mcpu" value="STM32F405RG" valueType="enumerated"/>
+								<option id="com.atollic.truestudio.common_options.target.mcpu.78929774" name="Microcontroller" superClass="com.atollic.truestudio.common_options.target.mcpu" value="STM32F405VG" valueType="enumerated"/>
 								<option id="com.atollic.truestudio.common_options.target.endianess.2128015571" name="Endianess" superClass="com.atollic.truestudio.common_options.target.endianess"/>
 								<option id="com.atollic.truestudio.common_options.target.instr_set.2099724081" name="Instruction set" superClass="com.atollic.truestudio.common_options.target.instr_set" value="com.atollic.truestudio.common_options.target.instr_set.thumb2" valueType="enumerated"/>
 								<option id="com.atollic.truestudio.common_options.target.fpu.1522329490" name="Floating point" superClass="com.atollic.truestudio.common_options.target.fpu" value="com.atollic.truestudio.common_options.target.fpu.hard" valueType="enumerated"/>
 								<inputType id="com.atollic.truestudio.as.input.1262237564" name="Input" superClass="com.atollic.truestudio.as.input"/>
 							</tool>
 							<tool id="com.atollic.truestudio.lib.debug.toolchain.gcc.373737363" name="C Compiler" superClass="com.atollic.truestudio.lib.debug.toolchain.gcc">
-								<option id="com.atollic.truestudio.common_options.target.mcpu.946545920" name="Microcontroller" superClass="com.atollic.truestudio.common_options.target.mcpu" value="STM32F405RG" valueType="enumerated"/>
+								<option id="com.atollic.truestudio.common_options.target.mcpu.946545920" name="Microcontroller" superClass="com.atollic.truestudio.common_options.target.mcpu" value="STM32F405VG" valueType="enumerated"/>
 								<option id="com.atollic.truestudio.common_options.target.instr_set.1542460309" name="Instruction set" superClass="com.atollic.truestudio.common_options.target.instr_set" value="com.atollic.truestudio.common_options.target.instr_set.thumb2" valueType="enumerated"/>
 								<option id="com.atollic.truestudio.common_options.target.interwork.123210453" name="Mix ARM/Thumb" superClass="com.atollic.truestudio.common_options.target.interwork"/>
 								<option id="com.atollic.truestudio.common_options.target.fpu.577548753" name="Floating point" superClass="com.atollic.truestudio.common_options.target.fpu" value="com.atollic.truestudio.common_options.target.fpu.hard" valueType="enumerated"/>
@@ -58,7 +61,7 @@
 								<inputType id="com.atollic.truestudio.gcc.input.1350570868" superClass="com.atollic.truestudio.gcc.input"/>
 							</tool>
 							<tool id="com.atollic.truestudio.lib.debug.toolchain.gpp.2017632815" name="C++ Compiler" superClass="com.atollic.truestudio.lib.debug.toolchain.gpp">
-								<option id="com.atollic.truestudio.common_options.target.mcpu.169670235" name="Microcontroller" superClass="com.atollic.truestudio.common_options.target.mcpu" value="STM32F405RG" valueType="enumerated"/>
+								<option id="com.atollic.truestudio.common_options.target.mcpu.169670235" name="Microcontroller" superClass="com.atollic.truestudio.common_options.target.mcpu" value="STM32F405VG" valueType="enumerated"/>
 								<option id="com.atollic.truestudio.common_options.target.endianess.522716009" name="Endianess" superClass="com.atollic.truestudio.common_options.target.endianess"/>
 								<option id="com.atollic.truestudio.common_options.target.instr_set.1415404599" name="Instruction set" superClass="com.atollic.truestudio.common_options.target.instr_set" value="com.atollic.truestudio.common_options.target.instr_set.thumb2" valueType="enumerated"/>
 								<option id="com.atollic.truestudio.common_options.target.fpu.1458153220" name="Floating point" superClass="com.atollic.truestudio.common_options.target.fpu" value="com.atollic.truestudio.common_options.target.fpu.hard" valueType="enumerated"/>
@@ -76,6 +79,7 @@
 					<sourceEntries>
 						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="src"/>
 						<entry excluding="FreeRTOS/Source/portable/MemMang/heap_4.c|FreeRTOS/Source/portable/MemMang/heap_2.c|FreeRTOS/Source/portable/MemMang/heap_1.c|CMSIS/DSP_Lib" flags="VALUE_WORKSPACE_PATH" kind="sourcePath" name="thirdparty"/>
+						<entry flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name="thirdparty/CMSIS/DSP_Lib/Source/ControllerFunctions"/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

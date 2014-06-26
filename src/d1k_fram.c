@@ -24,7 +24,6 @@ GNU General Public License for more details.
 #include "FreeRTOS.h"
 
 #include "d1k_i2c.h"
-#include "d1k_portal.h"
 
 /****************************************************************************
  * Defines
@@ -36,8 +35,8 @@ GNU General Public License for more details.
  * Private Prototypes
  ***************************************************************************/
 
-static void d1k_fram_portalRead ( int argc, char** argv );
-static void d1k_fram_portalWrite( int argc, char** argv );
+//static void d1k_fram_portalRead ( int argc, char** argv );
+//static void d1k_fram_portalWrite( int argc, char** argv );
 
 
 /****************************************************************************
@@ -73,8 +72,8 @@ void d1k_fram_Init( I2C_TypeDef* I2Cx, uint32 framSize, uint8 deviceAddress )
 	framI2Cx = I2Cx;
 	framDeviceAddress = deviceAddress;
 
-	d1k_portal_RegisterFunction("framRead",  d1k_fram_portalRead );
-	d1k_portal_RegisterFunction("framWrite", d1k_fram_portalWrite);
+	//d1k_portal_RegisterFunction("framRead",  d1k_fram_portalRead );
+	//d1k_portal_RegisterFunction("framWrite", d1k_fram_portalWrite);
 }
 
 /**
@@ -142,74 +141,74 @@ void d1k_fram_Read( uint16_t address, void * data, size_t len )
  * Private Functions
  ***************************************************************************/
 
-static void d1k_fram_portalRead( int argc, char** argv )
-{
-	// command, address, length
-	if (argc == 3)
-	{
-		long address = strtol(argv[1],NULL,0);
-		long len     = strtol(argv[2],NULL,0);
-
-		if (address < 0 || len < 0)
-		{
-			printf("Error.  Address and/or length cannot be negative.\n");
-			return;
-		}
-
-		if (address > 0x3FFF || len > 0xFF )
-		{
-			printf("Error.  Address and/or length too large.\n");
-			return;
-		}
-
-		uint8* data = malloc(len);
-
-		d1k_fram_Read(address,data,len);
-
-		printf("\nAddress: 0x%lX: ",address);
-
-		for (int i = 0; i < len; i++)
-		{
-			printf("0x%X ",data[i]);
-		}
-
-		printf("\n");
-
-		free(data);
-	}
-	else
-	{
-		printf("Invalid usage.  Need address and length arguments.\n");
-	}
-}
-
-static void d1k_fram_portalWrite( int argc, char** argv )
-{
-	// command, address, data
-	if (argc == 3)
-	{
-		long address = strtol(argv[1],NULL,0);
-		long data     = strtol(argv[2],NULL,0);
-
-		if (address < 0 )
-		{
-			printf("Error.  Address cannot be negative.\n");
-			return;
-		}
-
-		if (address > 0x3FFF )
-		{
-			printf("Error.  Address too large.\n");
-			return;
-		}
-
-		uint8 d = 0xFF & data;
-
-		d1k_fram_Write( address, &d, 1);
-	}
-	else
-	{
-		printf("Invalid usage.  Need address and length arguments.\n");
-	}
-}
+//static void d1k_fram_portalRead( int argc, char** argv )
+//{
+//	// command, address, length
+//	if (argc == 3)
+//	{
+//		long address = strtol(argv[1],NULL,0);
+//		long len     = strtol(argv[2],NULL,0);
+//
+//		if (address < 0 || len < 0)
+//		{
+//			printf("Error.  Address and/or length cannot be negative.\n");
+//			return;
+//		}
+//
+//		if (address > 0x3FFF || len > 0xFF )
+//		{
+//			printf("Error.  Address and/or length too large.\n");
+//			return;
+//		}
+//
+//		uint8* data = malloc(len);
+//
+//		d1k_fram_Read(address,data,len);
+//
+//		printf("\nAddress: 0x%lX: ",address);
+//
+//		for (int i = 0; i < len; i++)
+//		{
+//			printf("0x%X ",data[i]);
+//		}
+//
+//		printf("\n");
+//
+//		free(data);
+//	}
+//	else
+//	{
+//		printf("Invalid usage.  Need address and length arguments.\n");
+//	}
+//}
+//
+//static void d1k_fram_portalWrite( int argc, char** argv )
+//{
+//	// command, address, data
+//	if (argc == 3)
+//	{
+//		long address = strtol(argv[1],NULL,0);
+//		long data     = strtol(argv[2],NULL,0);
+//
+//		if (address < 0 )
+//		{
+//			printf("Error.  Address cannot be negative.\n");
+//			return;
+//		}
+//
+//		if (address > 0x3FFF )
+//		{
+//			printf("Error.  Address too large.\n");
+//			return;
+//		}
+//
+//		uint8 d = 0xFF & data;
+//
+//		d1k_fram_Write( address, &d, 1);
+//	}
+//	else
+//	{
+//		printf("Invalid usage.  Need address and length arguments.\n");
+//	}
+//}
 
