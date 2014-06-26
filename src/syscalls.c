@@ -34,9 +34,7 @@
 #include <sys/time.h>
 #include <sys/times.h>
 #include "stm32f4xx.h"
-
-#include "d1k_uart.h"
-
+#include "d1k_stdio_can.h"
 /* Variables */
 #undef errno
 extern int errno;
@@ -69,10 +67,19 @@ void _exit (int32_t status)
 
 int _write(int32_t file, uint8_t *ptr, int32_t len)
 {
-	d1k_uart_puts((char*)ptr, len);
+	if ((file == -1) || (ptr == NULL))
+	{
+		return 0;
+	}
 
-  /* Implement your write code here, this is used by puts and printf for example */
-  return len;
+	if (file != 1 && file != 2)
+	{
+		return -1;
+	}
+
+	d1k_STDIO_CAN_Send(ptr, len);
+
+	return len;
 }
 
 caddr_t _sbrk(int incr) {
